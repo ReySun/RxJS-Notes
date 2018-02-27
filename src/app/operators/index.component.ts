@@ -10,6 +10,10 @@ import { operator } from './operators.model';
 })
 export class IndexComponent implements OnInit {
   jsPath: string = 'assets/rxjs/operator/scan/scan.js'
+  pp(){
+    this.jsPath='assets/rxjs/operator/of/of.js'
+    console.log(22);
+  }
   contacts: any[];
 	public query: any;
 	private sub: any;

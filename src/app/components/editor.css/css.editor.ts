@@ -15,13 +15,16 @@ export class cssEditorComponent implements OnInit {
   @ViewChild('css') css: ElementRef;
 
   cssEditor: any;
-  cssCode: string = `// the CSS code here`;
+  cssCode: string = ``;
 
   constructor(private http: Http) {
 
   }
 
   ngOnInit() {
+
+  }
+  ngOnChanges(){
     var that = this;
     if (this.cssPath !== '') {
       this.http.get(this.cssPath)
@@ -44,14 +47,8 @@ export class cssEditorComponent implements OnInit {
     const css$ = Observable.fromEvent(that.cssEditor, 'change',
       (instance, change) => instance.getValue())
       .debounceTime(1000)
-    // .map(buildTag('script', {type: 'application/javascript'}, function (code) {
-    //   //Naive way of preventing this from polluting the global namespace
-    //   return `;(${consoleProxy.toString().trim()})();
-    //     (function wrapper() {
-    //           ${code}\n
-    //     })()\n`;
-    // }));
-    // js$.subscribe(x => eval(x));
+
+    css$.subscribe(x => console.log(x));
   }
 }
 

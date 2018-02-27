@@ -10,7 +10,7 @@
       <li nz-submenu nzOpen="{{query.type === 'create'}}">
         <span title ><i class="anticon anticon-laptop"></i>create</span>
         <ul>
-          <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'of'}}" [queryParams]="{type:'create', operator: 'of'}">of</li>
+          <li nz-menu-item [routerLink]='"/operators/index"' (click)="changePath('assets/rxjs/operator/of')" nzSelected="{{query.operator === 'of'}}" [queryParams]="{type:'create', operator: 'of'}">of</li>
           <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'fromEvent'}}" [queryParams]="{type:'create', operator: 'fromEvent'}">fromEvent</li>
         </ul>
       </li>
@@ -48,7 +48,7 @@
         </nz-tab>
 
         <ng-template #tabBarExtraContent>
-          <button nz-button>Preview</button>
+          <button nz-button (click)='pp()'>Preview</button>
         </ng-template>
 
       </nz-tabset>

@@ -10,17 +10,20 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class jsEditorComponent implements OnInit {
-  @Input('path') jsPath: string = '';
+  @Input('path') jsPath: string;
   @Output() jsChange=new EventEmitter<string>();
   @ViewChild('javascript') javascript: ElementRef;
 
   jsEditor: any;
-  jsCode: string = `// the javascript code here`;
+  jsCode: string = ``;
   constructor(private http: Http) {
 
   }
 
   ngOnInit() {
+
+  }
+  ngOnChanges(){
     var that = this;
     if (this.jsPath !== '') {
       this.http.get(this.jsPath)
@@ -30,6 +33,9 @@ export class jsEditorComponent implements OnInit {
           // 发射事件
           that.jsChange.emit(this.jsCode);
         })
+    }
+    if(this.jsEditor){
+      this.jsEditor.toTextArea()
     }
     this.jsEditor = CodeMirror.fromTextArea(this.javascript.nativeElement, {
       mode: "javascript",
@@ -44,17 +50,10 @@ export class jsEditorComponent implements OnInit {
     const js$ = Observable.fromEvent(that.jsEditor, 'change',
       (instance, change) => instance.getValue())
       .debounceTime(1000)
-    // .map(buildTag('script', {type: 'application/javascript'}, function (code) {
-    //   //Naive way of preventing this from polluting the global namespace
-    //   return `;(${consoleProxy.toString().trim()})();
-    //     (function wrapper() {
-    //           ${code}\n
-    //     })()\n`;
-    // }));
-    // js$.subscribe(x => eval(x));
+
+    js$.subscribe(x => console.log(x));
   }
 }
-
 
 @NgModule({
   imports: [CommonModule],

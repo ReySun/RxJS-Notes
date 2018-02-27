@@ -29,7 +29,8 @@
         "../node_modules/codemirror/mode/css/css.js",
         "../node_modules/codemirror/addon/mode/multiplex.js",
         "../node_modules/codemirror/mode/xml/xml.js",
-        "../node_modules/codemirror/mode/htmlmixed/htmlmixed.js"
+        "../node_modules/codemirror/mode/htmlmixed/htmlmixed.js",
+        "../node_modules/codemirror/addon/display/placeholder.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

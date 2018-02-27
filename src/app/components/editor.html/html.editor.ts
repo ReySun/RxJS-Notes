@@ -15,13 +15,16 @@ export class htmlEditorComponent implements OnInit {
   @ViewChild('html') html: ElementRef;
 
   htmlEditor: any;
-  htmlCode: string = `// the HTML code here`;
+  htmlCode: string = ``;
 
   constructor(private http: Http) {
 
   }
 
   ngOnInit() {
+
+  }
+  ngOnChanges(){
     var that = this;
     if (this.htmlPath !== '') {
       this.http.get(this.htmlPath)
@@ -44,14 +47,8 @@ export class htmlEditorComponent implements OnInit {
     const html$ = Observable.fromEvent(that.htmlEditor, 'change',
       (instance, change) => instance.getValue())
       .debounceTime(1000)
-    // .map(buildTag('script', {type: 'application/javascript'}, function (code) {
-    //   //Naive way of preventing this from polluting the global namespace
-    //   return `;(${consoleProxy.toString().trim()})();
-    //     (function wrapper() {
-    //           ${code}\n
-    //     })()\n`;
-    // }));
-    // js$.subscribe(x => eval(x));
+
+    html$.subscribe(x => console.log(x));
   }
 }
 
