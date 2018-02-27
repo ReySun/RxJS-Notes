@@ -9,6 +9,7 @@ import { operator } from './operators.model';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+  jsPath: string = 'assets/rxjs/operator/scan/scan.js'
   contacts: any[];
 	public query: any;
 	private sub: any;
@@ -17,7 +18,7 @@ export class IndexComponent implements OnInit {
     submenus:{},
     path:{}
   };
-  constructor(private http: Http, private _router: Router, private _ActivatedRoute: ActivatedRoute) {
+  constructor(private http: Http, private _router: Router, private _ActivatedRoute: ActivatedRoute) { //
     for(let menu in operator){
       this.MENU.menus.push(menu)
       this.MENU.submenus[menu]=[]
@@ -36,10 +37,9 @@ export class IndexComponent implements OnInit {
 	}
 
   ngOnInit() {
-		this.getQueryParams();
+    this.getQueryParams();
 	}
 	ngOnDestroy() {
 		this.sub.unsubscribe();
 	}
-
 }

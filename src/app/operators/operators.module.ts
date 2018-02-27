@@ -8,6 +8,9 @@ import { NzButtonModule } from '../components/nz-button/nz-button.module';
 import { NzTabsModule } from '../components/nz-tabs/nz-tabs.module';
 import { NzLayoutModule } from '../components/nz-layout/nz-layout.module';
 
+import { JsEditorModule } from '../components/editor.javascript/javascript.editor';
+import { HtmlEditorModule } from '../components/editor.html/html.editor';
+import { CssEditorModule } from '../components/editor.css/css.editor';
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +18,10 @@ import { NzLayoutModule } from '../components/nz-layout/nz-layout.module';
     NzMenuModule,
     NzButtonModule,
     NzTabsModule,
-    NzLayoutModule
+    NzLayoutModule,
+    JsEditorModule,
+    HtmlEditorModule,
+    CssEditorModule
   ],
   declarations: [IndexComponent]
 })
