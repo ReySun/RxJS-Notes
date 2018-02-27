@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "title": "RxJS",
+  "data": [
+    {
+      "create": {
+        "fromEvent": "rxjs/operator/fromEvent",
+        "of": "rxjs/operator/of"
+      },
+      "transform": {
+        "scan": "rxjs/operator/scan"
+      },
+      "filter": {
+        "take": "rxjs/operator/take"
+      }
+    }
+  ]
+}

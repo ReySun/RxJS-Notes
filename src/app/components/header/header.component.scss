@@ -1,0 +1,34 @@
+:host{
+  background: #404040;
+}
+:host ul {
+  height: 64px;
+  line-height: 64px;
+  color: rgba(255, 255, 255, 0.67);
+
+  margin: 0 0 0 12.5rem;
+  padding-left: 0;
+  overflow: hidden;
+}
+
+:host li.menu-item {
+  outline: none;
+  float: left;
+  margin: 0;
+  padding: 0 20px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.67);
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+:host li.menu-item:hover {
+  color: #fff;
+}
+
+:host li.menu-item-selected {
+  color: #fff;
+  background-color: #108EE9;
+}
