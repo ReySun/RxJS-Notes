@@ -1,30 +1,30 @@
 <nz-layout>
   <nz-sider [nzWidth]="200" style="background:#fff">
     <ul nz-menu [nzMode]="'inline'" style="height:100%">
-      <!-- <li nz-submenu *ngFor='let menu of MENU.menus'>
-        <span title><i class="anticon anticon-laptop"></i>{{menu}}</span>
-        <ul>
-          <li nz-menu-item *ngFor='let item of MENU.submenus[menu]' data-i='item'>{{item}}</li>
-        </ul>
-      </li> -->
-      <li nz-submenu nzOpen="{{query.type === 'create'}}">
+      <!-- <li nz-submenu nzOpen="{{operatorType === 'create'}}">
         <span title ><i class="anticon anticon-laptop"></i>create</span>
         <ul>
           <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'of'}}" [queryParams]="{type:'create', operator: 'of'}">of</li>
           <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'fromEvent'}}" [queryParams]="{type:'create', operator: 'fromEvent'}">fromEvent</li>
         </ul>
       </li>
-      <li nz-submenu nzOpen="{{query.type === 'transform'}}">
+      <li nz-submenu nzOpen="{{operatorType === 'transform'}}">
         <span title ><i class="anticon anticon-laptop"></i>transform</span>
         <ul>
           <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'scan'}}" [queryParams]="{type:'transform', operator: 'scan'}">scan</li>
+        </ul>
+      </li> -->
+      <li nz-submenu *ngFor='let type of types' nzOpen="{{operatorType === type}}">
+        <span title ><i class="anticon anticon-laptop"></i>{{type}}</span>
+        <ul>
+          <li nz-menu-item [routerLink]='"/operators/index"' *ngFor='let operator of operators[type]' nzSelected="{{query.operator === operator}}" [queryParams]="{type:type, operator: operator}">{{operator}}</li>
         </ul>
       </li>
     </ul>
   </nz-sider>
   <nz-layout style="padding:0 24px 24px;font-size: 14px;">
     <nz-content style="background:#fff; padding: 24px; min-height: 280px;">
-      <nz-tabset [nzTabBarExtraTemplate]="tabBarExtraContent">
+      <nz-tabset [nzTabBarExtraTemplate]="tabBarExtraContent" [nzSelectedIndex]='2'>
 
         <nz-tab>
           <ng-template #nzTabHeading>
@@ -48,11 +48,16 @@
         </nz-tab>
 
         <ng-template #tabBarExtraContent>
-          <button nz-button (click)='pp()'>Preview</button>
+          <button nz-button>Preview</button>
         </ng-template>
 
       </nz-tabset>
 
+      <div>
+        output
+      </div>
+      <iframe #output frameborder="0" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe>
+      <iframe #console frameborder="0" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe>
     </nz-content>
 
     <nz-footer style="text-align: center;">Ant Design ©2017 Implement By Angular</nz-footer>

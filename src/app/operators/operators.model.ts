@@ -1,12 +1,5 @@
-export var operator={
-  "create": {
-    "fromEvent": "rxjs/operator/fromEvent",
-    "of": "rxjs/operator/of"
-  },
-  "transform": {
-    "scan": "rxjs/operator/scan"
-  },
-  "filter": {
-    "take": "rxjs/operator/take"
-  }
+export const operators={
+  "create": ["fromEvent", "of"],
+  "transform": ["scan"],
+  "filter": ["take"]
 }

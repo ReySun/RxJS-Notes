@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
-import { operator } from './operators.model';
+import { operators } from './operators.model';
 
 @Component({
   selector: 'app-index',
@@ -9,30 +9,19 @@ import { operator } from './operators.model';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  htmlPath: string = 'assets/rxjs/operator/scan/scan.html';
-  cssPath: string = 'assets/rxjs/operator/scan/scan.css';
-  jsPath: string = 'assets/rxjs/operator/scan/scan.js';
-  pp(){
-    this.jsPath='assets/rxjs/operator/of/of.js'
-    console.log(22);
-  }
-  contacts: any[];
+  htmlPath: string = '';
+  cssPath: string = '';
+  jsPath: string = '';
+  operators: any = operators;
+  types: any = [];
 	public query: any;
-	private sub: any;
-  MENU:any={
-    menus:[],
-    submenus:{},
-    path:{}
-  };
-  constructor(private http: Http, private _router: Router, private _ActivatedRoute: ActivatedRoute) { //
-    for(let menu in operator){
-      this.MENU.menus.push(menu)
-      this.MENU.submenus[menu]=[]
+	private routerSubscribe: any;
 
-      for(let item in operator[menu]){
-        this.MENU.submenus[menu].push(item)
-        this.MENU.path[item]=operator[menu][item]
-      }
+  operatorType: string = 'create';
+  isFirst: boolean = true;
+  constructor(private http: Http, private _router: Router, private _ActivatedRoute: ActivatedRoute) {
+    for(let type in this.operators){
+      this.types.push(type)
     }
   }
   changePath(path){
@@ -41,17 +30,25 @@ export class IndexComponent implements OnInit {
     this.jsPath = `assets/rxjs/operator/${path}/${path}.js`;
   }
   getQueryParams() {
-		this.sub = this._ActivatedRoute.queryParams.subscribe(value => {
-      this.changePath(value.operator)
-      console.log(value);
-			this.query = value
+		this.routerSubscribe = this._ActivatedRoute.queryParams.subscribe(value => {
+      if(value.operator){
+        this.changePath(value.operator);
+      }
+      if(this.isFirst && value.type){
+        this.operatorType = value.type;
+        this.isFirst = false;
+      }
+			this.query = value;
 		});
 	}
 
   ngOnInit() {
     this.getQueryParams();
+    if(this._router.url === '/operators/index'){
+      this._router.navigateByUrl('/operators/index?type=create&operator=of')
+    }
 	}
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.routerSubscribe.unsubscribe();
 	}
 }
