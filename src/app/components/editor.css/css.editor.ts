@@ -1,8 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter, NgModule } from '@angular/core';
-import { Observable } from 'rxjs'
-import { Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
-import { log } from 'util';
+import { Http } from '@angular/http';
+
+import { Observable } from 'rxjs'
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'css-editor',
@@ -25,15 +26,24 @@ export class cssEditorComponent implements OnInit {
 
   }
   ngOnChanges(){
-    var that = this;
     if (this.cssPath !== '') {
       this.http.get(this.cssPath)
-        .subscribe(x => {
-          that.cssCode = JSON.parse(JSON.stringify(x))._body;
-          that.cssEditor.setValue(that.cssCode);
-          // 发射事件
-          that.cssChange.emit(this.cssCode);
+        .catch(x=>{
+          return Observable.of('')
         })
+        .subscribe(x => {
+          if(x === ''){
+            this.cssCode = ''
+          }else{
+            this.cssCode = JSON.parse(JSON.stringify(x))._body;
+          }
+          this.cssEditor.setValue(this.cssCode);
+          // 发射事件
+          this.cssChange.emit(this.cssCode);
+        })
+    }
+    if(this.cssEditor){
+      this.cssEditor.toTextArea()
     }
     this.cssEditor = CodeMirror.fromTextArea(this.css.nativeElement, {
       mode: 'css',
@@ -44,11 +54,11 @@ export class cssEditorComponent implements OnInit {
     this.cssEditor.setValue(this.cssCode);
 
     // TODO 处理change且发射事件
-    const css$ = Observable.fromEvent(that.cssEditor, 'change',
+    const css$ = Observable.fromEvent(this.cssEditor, 'change',
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    css$.subscribe(x => console.log(x));
+    css$.subscribe(x => console.log('css'));
   }
 }
 

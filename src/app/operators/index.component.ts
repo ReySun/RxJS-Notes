@@ -9,7 +9,9 @@ import { operator } from './operators.model';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  jsPath: string = 'assets/rxjs/operator/scan/scan.js'
+  htmlPath: string = 'assets/rxjs/operator/scan/scan.html';
+  cssPath: string = 'assets/rxjs/operator/scan/scan.css';
+  jsPath: string = 'assets/rxjs/operator/scan/scan.js';
   pp(){
     this.jsPath='assets/rxjs/operator/of/of.js'
     console.log(22);
@@ -33,9 +35,15 @@ export class IndexComponent implements OnInit {
       }
     }
   }
-
+  changePath(path){
+    this.htmlPath = `assets/rxjs/operator/${path}/${path}.html`;
+    this.cssPath = `assets/rxjs/operator/${path}/${path}.css`;
+    this.jsPath = `assets/rxjs/operator/${path}/${path}.js`;
+  }
   getQueryParams() {
 		this.sub = this._ActivatedRoute.queryParams.subscribe(value => {
+      this.changePath(value.operator)
+      console.log(value);
 			this.query = value
 		});
 	}

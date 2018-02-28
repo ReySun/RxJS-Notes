@@ -10,7 +10,7 @@
       <li nz-submenu nzOpen="{{query.type === 'create'}}">
         <span title ><i class="anticon anticon-laptop"></i>create</span>
         <ul>
-          <li nz-menu-item [routerLink]='"/operators/index"' (click)="changePath('assets/rxjs/operator/of')" nzSelected="{{query.operator === 'of'}}" [queryParams]="{type:'create', operator: 'of'}">of</li>
+          <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'of'}}" [queryParams]="{type:'create', operator: 'of'}">of</li>
           <li nz-menu-item [routerLink]='"/operators/index"' nzSelected="{{query.operator === 'fromEvent'}}" [queryParams]="{type:'create', operator: 'fromEvent'}">fromEvent</li>
         </ul>
       </li>
@@ -30,14 +30,14 @@
           <ng-template #nzTabHeading>
            HTML
           </ng-template>
-          <html-editor [path]="'assets/rxjs/operator/scan/scan.html'"></html-editor>
+          <html-editor [path]="htmlPath"></html-editor>
         </nz-tab>
 
         <nz-tab>
           <ng-template #nzTabHeading>
            CSS
           </ng-template>
-          <css-editor [path]="'assets/rxjs/operator/scan/scan.css'"></css-editor>
+          <css-editor [path]="cssPath"></css-editor>
         </nz-tab>
 
         <nz-tab>

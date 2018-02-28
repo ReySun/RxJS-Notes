@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter, NgModule, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs'
-import { Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
+import { Http } from '@angular/http';
+
+import { Observable } from 'rxjs'
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'js-editor',
@@ -24,14 +26,20 @@ export class jsEditorComponent implements OnInit {
 
   }
   ngOnChanges(){
-    var that = this;
     if (this.jsPath !== '') {
       this.http.get(this.jsPath)
+        .catch(x=>{
+          return Observable.of('')
+        })
         .subscribe(x => {
-          that.jsCode = JSON.parse(JSON.stringify(x))._body;
-          that.jsEditor.setValue(that.jsCode);
+          if(x === ''){
+            this.jsCode = '';
+          }else{
+            this.jsCode = JSON.parse(JSON.stringify(x))._body;
+          }
+          this.jsEditor.setValue(this.jsCode);
           // 发射事件
-          that.jsChange.emit(this.jsCode);
+          this.jsChange.emit(this.jsCode);
         })
     }
     if(this.jsEditor){
@@ -47,11 +55,11 @@ export class jsEditorComponent implements OnInit {
     this.jsEditor.setValue(this.jsCode);
 
     // TODO 处理change且发射事件
-    const js$ = Observable.fromEvent(that.jsEditor, 'change',
+    const js$ = Observable.fromEvent(this.jsEditor, 'change',
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    js$.subscribe(x => console.log(x));
+    js$.subscribe(x => console.log('js'));
   }
 }
 

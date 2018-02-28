@@ -1,7 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter, NgModule, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs'
-import { Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
+import { Http } from '@angular/http';
+
+import { Observable } from 'rxjs'
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'html-editor',
@@ -25,15 +27,24 @@ export class htmlEditorComponent implements OnInit {
 
   }
   ngOnChanges(){
-    var that = this;
     if (this.htmlPath !== '') {
       this.http.get(this.htmlPath)
-        .subscribe(x => {
-          that.htmlCode = JSON.parse(JSON.stringify(x))._body;
-          that.htmlEditor.setValue(that.htmlCode);
-          // 发射事件
-          that.htmlChange.emit(this.htmlCode);
+        .catch(x=>{
+          return Observable.of('')
         })
+        .subscribe(x => {
+          if(x === ''){
+            this.htmlCode = '';
+          }else{
+            this.htmlCode = JSON.parse(JSON.stringify(x))._body;
+          }
+          this.htmlEditor.setValue(this.htmlCode);
+          // 发射事件
+          this.htmlChange.emit(this.htmlCode);
+        })
+    }
+    if(this.htmlEditor){
+      this.htmlEditor.toTextArea()
     }
     this.htmlEditor = CodeMirror.fromTextArea(this.html.nativeElement, {
       mode: 'htmlmixed',
@@ -44,11 +55,11 @@ export class htmlEditorComponent implements OnInit {
     this.htmlEditor.setValue(this.htmlCode);
 
     // TODO 处理change且发射事件
-    const html$ = Observable.fromEvent(that.htmlEditor, 'change',
+    const html$ = Observable.fromEvent(this.htmlEditor, 'change',
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    html$.subscribe(x => console.log(x));
+    html$.subscribe(x => console.log('html'));
   }
 }
 
