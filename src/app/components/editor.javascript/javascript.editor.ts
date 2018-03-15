@@ -61,8 +61,8 @@ export class jsEditorComponent implements OnInit {
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    js$.subscribe(x => {
-      this.jsChange.emit(this.jsCode);
+    js$.subscribe(code => {
+      this.jsChange.emit(code);
     });
   }
 }

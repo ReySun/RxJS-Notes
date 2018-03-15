@@ -78,6 +78,7 @@ export class IndexComponent implements OnInit {
   }
   jsChange(code: string){
     this.jsCode = code;
+    // console.log(this.jsCode);
     this.renderOutput(this.outputElement, this.htmlCode, this.cssCode, this.jsCode)
     this.renderConsole()
   }
@@ -98,7 +99,6 @@ export class IndexComponent implements OnInit {
       parent.document.getElementById('console')
     );
     try {
-      console.log(1);
       ${js}
     } catch (error) {
       console.log(error.name +': '+ error.message);

@@ -58,9 +58,8 @@ export class cssEditorComponent implements OnInit {
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    css$.subscribe(x => {
-      console.log(this.cssCode);
-      this.cssChange.emit(this.cssCode)
+    css$.subscribe(code => {
+      this.cssChange.emit(code)
     });
   }
 }
