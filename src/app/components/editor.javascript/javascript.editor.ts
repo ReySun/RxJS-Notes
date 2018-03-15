@@ -39,8 +39,10 @@ export class jsEditorComponent implements OnInit {
           }
           this.jsEditor.setValue(this.jsCode);
           // 发射事件
-          this.jsChange.emit(this.jsCode);
+
         })
+    }else{
+      this.jsCode = '';
     }
     if(this.jsEditor){
       this.jsEditor.toTextArea()
@@ -59,7 +61,9 @@ export class jsEditorComponent implements OnInit {
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    js$.subscribe(x => console.log('js'));
+    js$.subscribe(x => {
+      this.jsChange.emit(this.jsCode);
+    });
   }
 }
 

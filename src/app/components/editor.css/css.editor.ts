@@ -38,9 +38,9 @@ export class cssEditorComponent implements OnInit {
             this.cssCode = JSON.parse(JSON.stringify(x))._body;
           }
           this.cssEditor.setValue(this.cssCode);
-          // 发射事件
-          this.cssChange.emit(this.cssCode);
         })
+    }else{
+      this.cssCode = ''
     }
     if(this.cssEditor){
       this.cssEditor.toTextArea()
@@ -58,7 +58,10 @@ export class cssEditorComponent implements OnInit {
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    css$.subscribe(x => console.log('css'));
+    css$.subscribe(x => {
+      console.log(this.cssCode);
+      this.cssChange.emit(this.cssCode)
+    });
   }
 }
 

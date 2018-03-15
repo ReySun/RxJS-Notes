@@ -39,9 +39,9 @@ export class htmlEditorComponent implements OnInit {
             this.htmlCode = JSON.parse(JSON.stringify(x))._body;
           }
           this.htmlEditor.setValue(this.htmlCode);
-          // 发射事件
-          this.htmlChange.emit(this.htmlCode);
         })
+    }else{
+      this.htmlCode = '';
     }
     if(this.htmlEditor){
       this.htmlEditor.toTextArea()
@@ -59,7 +59,9 @@ export class htmlEditorComponent implements OnInit {
       (instance, change) => instance.getValue())
       .debounceTime(1000)
 
-    html$.subscribe(x => console.log('html'));
+    html$.subscribe(code => {
+      this.htmlChange.emit(code);
+    })
   }
 }
 

@@ -17,7 +17,7 @@
       <li nz-submenu *ngFor='let type of types' nzOpen="{{operatorType === type}}">
         <span title ><i class="anticon anticon-laptop"></i>{{type}}</span>
         <ul>
-          <li nz-menu-item [routerLink]='"/operators/index"' *ngFor='let operator of operators[type]' nzSelected="{{query.operator === operator}}" [queryParams]="{type:type, operator: operator}">{{operator}}</li>
+          <li nz-menu-item [routerLink]='"/operators/index"' *ngFor='let operator of operators[type]' nzSelected="{{query.operator === operator}}" [queryParams]="{type:type, operator: operator}" [fragment]="operatorsData[type][operator]['fragment']">{{operator}}</li>
         </ul>
       </li>
     </ul>
@@ -30,21 +30,21 @@
           <ng-template #nzTabHeading>
            HTML
           </ng-template>
-          <html-editor [path]="htmlPath"></html-editor>
+          <html-editor [path]="htmlPath" (htmlChange)='htmlChange($event)'></html-editor>
         </nz-tab>
 
         <nz-tab>
           <ng-template #nzTabHeading>
            CSS
           </ng-template>
-          <css-editor [path]="cssPath"></css-editor>
+          <css-editor [path]="cssPath" (cssChange)='cssChange($event)'></css-editor>
         </nz-tab>
 
         <nz-tab>
           <ng-template #nzTabHeading>
            JavaScript
           </ng-template>
-          <js-editor [path]="jsPath"></js-editor>
+          <js-editor [path]="jsPath" (jsChange)='jsChange($event)'></js-editor>
         </nz-tab>
 
         <ng-template #tabBarExtraContent>
@@ -56,8 +56,8 @@
       <div>
         output
       </div>
-      <iframe #output frameborder="0" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe>
-      <iframe #console frameborder="0" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe>
+      <iframe #output style="width: 40%;float: left;" frameborder="0" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe>
+      <div id="console" #console style="width: 40%;float: left;"></div>
     </nz-content>
 
     <nz-footer style="text-align: center;">Ant Design ©2017 Implement By Angular</nz-footer>
